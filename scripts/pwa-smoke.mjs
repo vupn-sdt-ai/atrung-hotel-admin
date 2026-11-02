@@ -39,7 +39,7 @@ console.log(JSON.stringify({
   iconStatus: icon.status(),
   registration,
   heading,
-  offlineHasContent: offlineHeading.includes('A TRUNG') || offlineHeading.includes('Đăng nhập') || offlineHeading.includes('Tổng quan'),
+  offlineHasContent: offlineHeading.includes('Chào buổi sáng') || offlineHeading.includes('DOANH THU') || offlineHeading.includes('Đăng nhập'),
   errors,
 }, null, 2))
 await browser.close()
