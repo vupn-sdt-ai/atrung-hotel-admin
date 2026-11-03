@@ -2,6 +2,11 @@
 
 Bản demo giao diện quản lý homestay cho **A Trung Homestay · Quy Nhơn**. Mục tiêu của giai đoạn này là một UI đẹp, responsive, cài được như app (PWA) và có đủ luồng nghiệp vụ để khách xem/chốt dự án.
 
+- **Live demo:** https://atrung-hotel-admin.vercel.app
+- **Vercel project:** https://vercel.com/nguyen-vus-projects-0643d880/atrung-hotel-admin
+- **Repo hiện tại:** https://github.com/vupn-sdt-ai/atrung-hotel-admin
+- **Repo đích:** `nvu-1801/atrung-hotel-admin` (đang chờ accept transfer/collaborator invite)
+
 > Đây là **UI demo với dữ liệu mẫu**, chưa phải PMS vận hành thật. Không có backend, không thanh toán thật, không lưu số thẻ/CVV. Dữ liệu nằm trong `localStorage` của trình duyệt.
 
 ## Demo
@@ -70,6 +75,7 @@ npm run preview
 node scripts/screenshot.mjs   # chụp desktop/mobile + kiểm tra tràn ngang
 node scripts/smoke.mjs        # tạo booking, sửa giá, check-in/out, thu tiền, export CSV
 node scripts/pwa-smoke.mjs    # manifest, service worker, offline (cần npm run preview)
+node scripts/vercel-verify.mjs # verify production Vercel: routes, ảnh, PWA, mobile
 ```
 
 Ảnh kiểm tra nằm trong `shots/`.
@@ -86,6 +92,18 @@ npx vercel --prod
 Hoặc import repo GitHub vào Vercel, chọn framework **Vite**, build command `npm run build`, output `dist`.
 
 PWA cần HTTPS. Vercel cung cấp HTTPS mặc định; service worker sẽ đăng ký sau lần tải đầu.
+
+### CI/CD
+
+Production đã deploy thành công và verify 200 tại `https://atrung-hotel-admin.vercel.app`.
+
+Git integration đang chờ quyền truy cập repo: tài khoản Vercel `nvu-1801` cần accept collaborator invite/transfer của repo `vupn-sdt-ai/atrung-hotel-admin`, sau đó chạy:
+
+```bash
+vercel git connect --yes
+```
+
+Khi đã kết nối, mỗi lần push `main` Vercel sẽ tự build/deploy. Trước đó có thể deploy thủ công bằng `vercel deploy --prebuilt --prod --yes`.
 
 ## Cấu trúc chính
 

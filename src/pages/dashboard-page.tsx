@@ -149,21 +149,21 @@ export function DashboardPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-sea-950/95 via-sea-900/80 to-sea-800/40" />
         <div className="absolute -right-16 -top-20 h-64 w-64 rounded-full border border-sand-50/10" />
         <div className="absolute -right-4 top-10 h-32 w-32 rounded-full border border-sand-50/10" />
-        <div className="relative grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-center">
+        <div className="relative grid gap-5 p-5 sm:gap-8 sm:p-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-center">
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <Badge className="border-white/15 bg-white/10 text-sand-100">Hôm nay</Badge>
               <span className="text-[11px] text-sand-200/70">{data.inHouse.length} khách đang lưu trú</span>
             </div>
-            <h2 className="mt-4 max-w-xl text-balance font-display text-3xl font-semibold leading-[1.1] tracking-[-0.04em] text-sand-50 sm:text-4xl">
+            <h2 className="mt-3 max-w-xl text-balance font-display text-2xl font-semibold leading-[1.1] tracking-[-0.04em] text-sand-50 sm:mt-4 sm:text-4xl">
               {data.arrivals.length > 0 ? `${data.arrivals.length} vị khách đang chờ được đón.` : 'Hôm nay là một ngày nhẹ nhàng.'}
             </h2>
-            <p className="mt-3 max-w-lg text-sm leading-relaxed text-sand-200/75">
+            <p className="mt-2 max-w-lg text-sm leading-relaxed text-sand-200/75 sm:mt-3">
               {data.departures.length > 0
                 ? `${data.departures.length} khách trả phòng hôm nay. Kiểm tra công nợ và giao buồng phòng trước 12:00.`
                 : 'Không có khách trả phòng. Dành thời gian kiểm tra phòng và chuẩn bị cho ngày mai.'}
             </p>
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2 sm:mt-6">
               <Button size="sm" className="bg-sand-50 text-sea-900 hover:bg-sand-100" onClick={() => navigate('/front-desk?tab=arrivals')}>
                 <LogIn className="h-3.5 w-3.5" /> Đón khách
               </Button>
@@ -173,9 +173,9 @@ export function DashboardPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-5 rounded-3xl border border-white/15 bg-white/10 p-4 backdrop-blur-md sm:p-5">
-            <div className="relative grid h-24 w-24 shrink-0 place-items-center">
-              <svg viewBox="0 0 100 100" className="h-24 w-24 -rotate-90">
+          <div className="flex items-center gap-4 rounded-3xl border border-white/15 bg-white/10 p-3 backdrop-blur-md sm:gap-5 sm:p-5">
+            <div className="relative grid h-20 w-20 shrink-0 place-items-center sm:h-24 sm:w-24">
+              <svg viewBox="0 0 100 100" className="h-20 w-20 -rotate-90 sm:h-24 sm:w-24">
                 <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(250,248,243,0.18)" strokeWidth="8" />
                 <circle
                   cx="50"
@@ -190,7 +190,7 @@ export function DashboardPage() {
                 />
               </svg>
               <div className="absolute text-center">
-                <p className="font-display text-2xl font-semibold leading-none">{data.occupancy}%</p>
+                <p className="font-display text-xl font-semibold leading-none sm:text-2xl">{data.occupancy}%</p>
                 <p className="mt-1 text-[9px] uppercase tracking-[0.14em] text-sand-200/60">công suất</p>
               </div>
             </div>

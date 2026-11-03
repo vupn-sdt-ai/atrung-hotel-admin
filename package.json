@@ -11,7 +11,8 @@
     "lint": "oxlint",
     "screenshots": "node scripts/screenshot.mjs",
     "test:smoke": "node scripts/smoke.mjs",
-    "test:pwa": "node scripts/pwa-smoke.mjs"
+    "test:pwa": "node scripts/pwa-smoke.mjs",
+    "verify:vercel": "node scripts/vercel-verify.mjs"
   },
   "dependencies": {
     "@fontsource/be-vietnam-pro": "^5.2.8",

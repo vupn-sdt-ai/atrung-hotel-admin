@@ -26,10 +26,10 @@ dist-ssr
 # Demo artifacts
 shots/
 .vercel
+.env*
 
-.vercel
-
-# local auth logs
+# local auth / QA logs
 login.out
 login.err
-
+mcp.out
+mcp.err
