@@ -45,7 +45,7 @@ export function Topbar({ onSearch, onInstall }: { onSearch: () => void; onInstal
   }
 
   return (
-    <header className="sticky top-0 z-30 border-b border-sand-200/60 bg-sand-50/75 backdrop-blur-xl">
+    <header className="sticky top-0 z-30 border-b border-sand-200/60 bg-sand-50/75 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
       <div className="mx-auto flex h-[64px] max-w-[1500px] items-center gap-3 px-4 sm:h-[72px] sm:px-6 lg:px-8">
         <div className="md:hidden">
           <Logo compact />
@@ -58,7 +58,8 @@ export function Topbar({ onSearch, onInstall }: { onSearch: () => void; onInstal
         <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
           <button
             onClick={onSearch}
-            className="group flex h-9 items-center gap-2 rounded-xl border border-sand-200/80 bg-white/55 px-2.5 text-ink-400 transition hover:bg-white hover:text-ink-700 sm:w-56 sm:px-3"
+            aria-label="Tìm kiếm"
+            className="group flex h-10 items-center gap-2 rounded-xl border border-sand-200/80 bg-white/55 px-2.5 text-ink-400 transition hover:bg-white hover:text-ink-700 sm:h-9 sm:w-56 sm:px-3"
           >
             <Search className="h-4 w-4 shrink-0" />
             <span className="hidden text-xs sm:block">Tìm nhanh...</span>
@@ -82,14 +83,14 @@ export function Topbar({ onSearch, onInstall }: { onSearch: () => void; onInstal
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex h-10 items-center gap-2 rounded-xl border border-sand-200/80 bg-white/55 p-1 pr-1.5 transition hover:bg-white sm:pr-2">
-                <Avatar name={session?.name ?? 'Nguyễn Vũ'} size="sm" className="h-7 w-7 text-[10px]" />
+                <Avatar name={session?.name ?? 'Anh Trưng'} size="sm" className="h-7 w-7 text-[10px]" />
                 <span className="hidden max-w-24 truncate text-xs font-semibold text-ink-800 sm:block">{session?.name?.split(' ').slice(-1)[0] ?? 'Vũ'}</span>
                 <ChevronDown className="hidden h-3.5 w-3.5 text-ink-400 sm:block" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-60">
               <DropdownMenuLabel>
-                <span className="block text-[11px] font-bold normal-case tracking-normal text-ink-900">{session?.name ?? 'Nguyễn Vũ'}</span>
+                <span className="block text-[11px] font-bold normal-case tracking-normal text-ink-900">{session?.name ?? 'Anh Trưng'}</span>
                 <span className="mt-0.5 block text-[10px] font-medium normal-case tracking-normal text-ink-400">
                   {session ? ROLE_LABELS[session.role] : 'Chủ homestay'} · {session?.email ?? 'owner@atrung.demo'}
                 </span>

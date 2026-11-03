@@ -50,7 +50,7 @@ export function LoginPage() {
 
   return (
     <div className="min-h-svh bg-sand-50 lg:grid lg:grid-cols-[1.05fr_0.95fr]">
-      <section className="relative min-h-[280px] overflow-hidden bg-sea-900 px-6 py-8 sm:min-h-[340px] lg:min-h-svh lg:px-12 lg:py-12">
+      <section className="relative min-h-[280px] overflow-hidden bg-sea-900 px-6 pb-8 pt-[max(2rem,env(safe-area-inset-top))] sm:min-h-[340px] lg:min-h-svh lg:px-12 lg:pb-12 lg:pt-12">
         <img
           src="/images/rooms/lobby.webp"
           alt="Không gian A Trung Homestay"

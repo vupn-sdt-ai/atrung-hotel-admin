@@ -83,13 +83,13 @@ export const SheetContent = forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed inset-y-0 right-0 z-50 flex h-full w-full max-w-xl flex-col overflow-y-auto border-l border-white/60 bg-sand-50 p-0 shadow-lift outline-none',
+        'fixed inset-y-0 right-0 z-50 flex h-full w-full max-w-xl flex-col overflow-y-auto border-l border-white/60 bg-sand-50 p-0 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] shadow-lift outline-none',
         className,
       )}
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute right-4 top-4 z-10 grid h-9 w-9 place-items-center rounded-full bg-white/85 text-ink-500 shadow-sm transition hover:bg-white hover:text-ink-900">
+      <DialogPrimitive.Close className="absolute right-4 top-[calc(1rem+env(safe-area-inset-top))] z-10 grid h-9 w-9 place-items-center rounded-full bg-white/85 text-ink-500 shadow-sm transition hover:bg-white hover:text-ink-900">
         <X className="h-4 w-4" />
         <span className="sr-only">Đóng</span>
       </DialogPrimitive.Close>

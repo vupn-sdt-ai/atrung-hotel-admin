@@ -12,7 +12,7 @@ import type {
 } from '../types'
 
 export const DEMO_USERS: DemoUser[] = [
-  { id: 'u-owner', name: 'Nguyễn Vũ', role: 'owner', email: 'owner@atrung.demo', phone: '0905 123 456', initials: 'NV' },
+  { id: 'u-owner', name: 'Anh Trưng', role: 'owner', email: 'owner@atrung.demo', phone: '0905 123 456', initials: 'AT' },
   { id: 'u-manager', name: 'Trần Mai', role: 'manager', email: 'manager@atrung.demo', phone: '0912 345 678', initials: 'TM' },
   { id: 'u-reception', name: 'Lê Hân', role: 'receptionist', email: 'letan@atrung.demo', phone: '0938 456 789', initials: 'LH' },
   { id: 'u-housekeeping', name: 'Phạm Tâm', role: 'housekeeping', email: 'buongphong@atrung.demo', phone: '0977 567 890', initials: 'PT' },

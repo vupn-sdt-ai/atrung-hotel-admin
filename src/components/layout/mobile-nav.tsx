@@ -119,9 +119,9 @@ export function MobileNav({ onInstall }: { onInstall: () => void }) {
 
             <div className="mt-4 rounded-2xl border border-sand-200 bg-white/55 p-4">
               <div className="flex items-center gap-3">
-                <Avatar name={session?.name ?? 'Nguyễn Vũ'} size="md" />
+                <Avatar name={session?.name ?? 'Anh Trưng'} size="md" />
                 <div className="min-w-0">
-                  <p className="truncate text-xs font-bold text-ink-900">{session?.name ?? 'Nguyễn Vũ'}</p>
+                  <p className="truncate text-xs font-bold text-ink-900">{session?.name ?? 'Anh Trưng'}</p>
                   <p className="text-[10px] text-ink-400">{session ? ROLE_LABELS[session.role] : 'Chủ homestay'}</p>
                 </div>
               </div>

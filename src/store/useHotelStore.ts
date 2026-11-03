@@ -372,8 +372,16 @@ export const useHotelStore = create<HotelStore>()(
     }),
     {
       name: 'atrung-hotel-demo-v1',
-      version: 1,
+      version: 2,
       storage: createJSONStorage(() => localStorage),
+      migrate: (persistedState) => {
+        const state = persistedState as Partial<HotelStore>
+        const owner = DEMO_USERS.find((user) => user.role === 'owner')
+        return {
+          ...state,
+          session: state.session?.role === 'owner' && owner ? owner : state.session,
+        } as HotelStore
+      },
     },
   ),
 )

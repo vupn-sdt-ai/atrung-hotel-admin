@@ -69,7 +69,7 @@ export function NotificationMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
-          className="relative grid h-9 w-9 place-items-center rounded-xl border border-sand-200/80 bg-white/55 text-ink-500 transition hover:bg-white hover:text-ink-900"
+          className="relative grid h-10 w-10 place-items-center rounded-xl border border-sand-200/80 bg-white/55 text-ink-500 transition hover:bg-white hover:text-ink-900 sm:h-9 sm:w-9"
           aria-label="Thông báo"
         >
           <Bell className="h-4 w-4" />
