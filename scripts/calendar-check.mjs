@@ -1,6 +1,6 @@
 import { chromium } from '@playwright/test'
 
-const base = 'http://127.0.0.1:5173'
+const base = process.env.BASE_URL || 'http://127.0.0.1:5173'
 const browser = await chromium.launch()
 const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } })
 const page = await context.newPage()
