@@ -125,7 +125,7 @@ export function DashboardPage() {
     <div className="space-y-5 sm:space-y-6">
       <PageHeader
         eyebrow={formatDateLong(today)}
-        title={`Chào buổi sáng, ${session?.name?.split(' ').slice(-1)[0] ?? 'Vũ'}.`}
+        title={`Chào buổi sáng, ${session?.name?.split(' ').slice(-1)[0] ?? 'Trưng'}.`}
         description="Một ngày mới ở A Trung — mọi việc quan trọng đã được gom về đây."
         actions={
           <>

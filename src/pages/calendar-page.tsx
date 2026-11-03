@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { differenceInCalendarDays, format, parseISO } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import { vi } from 'date-fns/locale'
 import { CalendarPlus, ChevronLeft, ChevronRight, CircleDollarSign, Clock3, DoorOpen, Info, Pencil } from 'lucide-react'
 import { toast } from 'sonner'
 import { useHotelStore, rateForDate } from '../store/useHotelStore'
-import { addDaysKey, cn, formatDateVN, formatMoney, isWeekendKey, todayKey } from '../lib/utils'
+import { addDaysKey, cn, formatDateVN, formatMoney, isWeekendKey, nightsBetween, todayKey } from '../lib/utils'
 import { isBookingActiveOn, occupiedRoomIds } from '../lib/analytics'
-import { BOOKING_BAR_CLASSES, ROOM_STATUS_LABELS } from '../lib/constants'
+import { BOOKING_STATUS_CLASSES, ROOM_STATUS_LABELS } from '../lib/constants'
 import type { Booking, CalendarOverride, RoomType } from '../types'
 import { PageHeader } from '../components/shared/page-header'
 import { Card } from '../components/ui/card'
@@ -17,7 +17,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../components/ui/dialog'
 import { Field, Input } from '../components/ui/field'
 import { Switch } from '../components/ui/primitives'
-import { BookingDetailSheet } from '../components/bookings/booking-detail-sheet'
+import { BookingCalendarModal } from '../components/bookings/booking-calendar-modal'
 import { BookingFormDialog } from '../components/bookings/booking-form-dialog'
 
 const DAYS = 14
@@ -147,40 +147,54 @@ export function CalendarPage() {
                         <p className="truncate text-[10px] text-ink-500">{room.name}</p>
                         <p className="mt-0.5 truncate text-[9px] text-ink-400">{type?.name} · {ROOM_STATUS_LABELS[room.status]}</p>
                       </button>
-                      <div className="relative grid flex-1" style={{ gridTemplateColumns: `repeat(${DAYS}, minmax(80px, 1fr))` }}>
-                        {dates.map((date) => (
-                          <button
-                            key={date}
-                            onClick={() => openForm(room.id, date)}
-                            className={cn('min-h-[74px] border-r border-sand-200/50 transition hover:bg-sea-50/60 last:border-r-0', date === todayKey() && 'bg-sea-50/40')}
-                            aria-label={`Đặt ${room.number} ngày ${date}`}
-                          />
-                        ))}
-                        {roomBookings.map((booking) => {
-                          const startOffset = Math.max(0, differenceInCalendarDays(parseISO(booking.checkIn), parseISO(dates[0])))
-                          const endOffset = Math.min(DAYS, differenceInCalendarDays(parseISO(booking.checkOut), parseISO(dates[0])))
-                          const guest = guests.find((item) => item.id === booking.guestId)
-                          if (endOffset <= startOffset) return null
+                      <div className="grid flex-1" style={{ gridTemplateColumns: `repeat(${DAYS}, minmax(80px, 1fr))` }}>
+                        {dates.map((date) => {
+                          const cellBookings = roomBookings.filter((booking) => isBookingActiveOn(booking, date))
+                          const isToday = date === todayKey()
                           return (
-                            <button
-                              key={booking.id}
-                              onClick={(event) => {
-                                event.stopPropagation()
-                                openDetail(booking)
-                              }}
-                              className={cn(
-                                'absolute top-3 z-10 h-[46px] overflow-hidden rounded-xl px-2.5 text-left text-[10px] shadow-sm transition hover:-translate-y-0.5 hover:shadow-md',
-                                BOOKING_BAR_CLASSES[booking.status],
-                              )}
-                              style={{
-                                left: `calc(${(startOffset / DAYS) * 100}% + 3px)`,
-                                width: `calc(${((endOffset - startOffset) / DAYS) * 100}% - 6px)`,
-                              }}
-                              title={`${guest?.name} · ${booking.code}`}
-                            >
-                              <span className="block truncate font-bold leading-tight">{guest?.name}</span>
-                              <span className="mt-0.5 block truncate text-[9px] opacity-80">{Math.max(1, differenceInCalendarDays(parseISO(booking.checkOut), parseISO(booking.checkIn)))} đêm · {booking.adults + booking.children} khách</span>
-                            </button>
+                            <div key={date} className={cn('group relative min-h-[86px] border-r border-sand-200/50 last:border-r-0', isToday && 'bg-sea-50/40')}>
+                              <button
+                                onClick={() => openForm(room.id, date)}
+                                className="absolute inset-0 z-0 w-full transition hover:bg-sea-50/60"
+                                aria-label={`Đặt ${room.number} ngày ${date}`}
+                              />
+                              <div className="pointer-events-none relative z-10 flex min-h-[86px] flex-col gap-1 p-1.5">
+                                {cellBookings.map((booking) => {
+                                  const guest = guests.find((item) => item.id === booking.guestId)
+                                  const nights = Math.max(1, nightsBetween(booking.checkIn, booking.checkOut))
+                                  const nameParts = guest ? guest.name.trim().split(/\s+/) : []
+                                  const displayName = nameParts.length > 2
+                                    ? nameParts.slice(-2).join(' ')
+                                    : nameParts.length === 2
+                                      ? `${nameParts[0]} ${nameParts[1][0]}.`
+                                      : nameParts[0] ?? 'Khách'
+                                  const statusShort = booking.status === 'checked_in' ? 'Đang ở' : booking.status === 'confirmed' ? 'Xác nhận' : booking.status === 'pending' ? 'Chờ' : 'Đã trả'
+                                  return (
+                                    <button
+                                      key={booking.id}
+                                      onClick={(event) => {
+                                        event.stopPropagation()
+                                        openDetail(booking)
+                                      }}
+                                      className={cn(
+                                        'pointer-events-auto w-full rounded-lg border px-1.5 py-1 text-left text-[8px] leading-tight shadow-sm transition hover:-translate-y-0.5 hover:shadow-md',
+                                        BOOKING_STATUS_CLASSES[booking.status],
+                                      )}
+                                      title={`${guest?.name} · ${booking.code} · ${nights} đêm`}
+                                    >
+                                      <span className="block truncate font-bold">{displayName}</span>
+                                      <span className="mt-0.5 flex items-center gap-1 truncate text-[7px] opacity-80">
+                                        <span className="h-1 w-1 shrink-0 rounded-full bg-current" />
+                                        {statusShort}
+                                      </span>
+                                    </button>
+                                  )
+                                })}
+                                {cellBookings.length === 0 && (
+                                  <span className="mt-1 grid h-6 w-6 place-items-center rounded-md border border-dashed border-sand-300 text-[12px] text-ink-300 opacity-0 transition group-hover:opacity-100">+</span>
+                                )}
+                              </div>
+                            </div>
                           )
                         })}
                       </div>
@@ -256,7 +270,7 @@ export function CalendarPage() {
         </TabsContent>
       </Tabs>
 
-      <BookingDetailSheet bookingId={detailId} open={detailOpen} onOpenChange={setDetailOpen} />
+      <BookingCalendarModal bookingId={detailId} open={detailOpen} onOpenChange={setDetailOpen} />
       <BookingFormDialog open={formOpen} onOpenChange={setFormOpen} initialRoomId={formRoomId} initialDate={formDate} />
       <RateDialog cell={rateCell} onClose={() => setRateCell(undefined)} onSave={setOverride} onClear={clearOverride} />
     </div>
